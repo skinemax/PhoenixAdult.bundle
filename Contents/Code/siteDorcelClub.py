@@ -66,7 +66,6 @@ def update(metadata,siteID,movieGenres,movieActors):
     metadata.collections.add(tagline)
     try:
         movieName = detailsPageElements.xpath('//div[@class="movie"]/a')[0].text_content().strip()
-        metadata.collections.add(movieName)
         movieGenres.addGenre("Blockbuster Movie")
     except:
         pass
