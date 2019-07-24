@@ -38,11 +38,6 @@ def update(metadata,siteID,movieGenres,movieActors):
     tagline = tagline.strip()
     metadata.tagline = tagline
     metadata.collections.add(tagline)
-    try:
-        dvdName = detailsPageElements.xpath('//span[@class="update_dvds"]')[0].text_content().replace('Movie:','').strip()
-        metadata.collections.add(dvdName)
-    except:
-        pass
     metadata.title = detailsPageElements.xpath('//span[@class="title_bar_hilite"]')[0].text_content().strip()
 
     # Genres
