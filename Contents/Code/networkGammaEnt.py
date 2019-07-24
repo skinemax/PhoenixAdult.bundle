@@ -303,31 +303,6 @@ def update(metadata,siteID,movieGenres,movieActors):
     metadata.tagline = tagline
     metadata.collections.add(tagline)
 
-    # Title DVD
-    try:
-        dvdTitle = detailsPageElements.xpath('//a[contains(@class,"dvdLink")][1]')[0].get('title').strip()
-        metadata.collections.add(dvdTitle.replace('#0','').replace('#',''))
-    except:
-        try:
-            dvdTitleScript = detailsPageElements.xpath('//script[contains(text(),"dvdName")]')[0].text_content()
-            alpha = dvdTitleScript.find('"dvdName"')+11
-            omega = dvdTitleScript.find('"',alpha)
-            dvdTitle = dvdTitleScript[alpha:omega]
-            if len(dvdTitle) > 0:
-                metadata.collections.add(dvdTitle.replace('#0','').replace('#',''))
-        except:
-            try:
-                dvdTitle = detailsPageElements.xpath('//h1[@class="sceneTitle"]')[0].text_content().strip()
-                dvdTitle = dvdTitle.replace("BONUS-", "").replace("BONUS - ", "")
-                dvdTitle = dvdTitle.replace("BONUS", "")
-                dvdTitle = dvdTitle.replace("BTS-", "").replace("BTS - ", "")
-                dvdTitle = dvdTitle.replace("BTS", "")
-                metadata.collections.add(dvdTitle.replace('#0','').replace('#',''))
-            except:
-                dvdTitle = "This is some damn nonsense that should never match the scene title"
-
-
-
     # Director
     try:
         directors = detailsPageElements.xpath('//div[@class="sceneCol sceneColDirectors"]//a | //ul[@class="directedBy"]/li/a')
