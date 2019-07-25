@@ -2,59 +2,9 @@ from datetime import datetime
 from lxml import html
 import requests
 import logging
+from siteConfig import *
 
 logger = logging.getLogger(__name__)
-
-#Customise your siteList by creating a new entry per site
-#Each collection entry needs a Sitename and directory adjustment information.
-
-#In this example sabnzbd downloads the scenes to C:\\Path\to\Porn\New and I want the final content to end up in site folders inside that folder.
-#We will keep only the portion of the path before siteList field 2
-#We will add siteList field 3 back onto whatever is remaining of the path
-
-#Examples
-#From C:\\Path\to\Porn\New      To: C:\\Path\to\Porn\New\Site       Set: siteList[0] = ["Site", "New", "New\Site"]
-#                               To: C:\\Path\to\Porn\Site           Set: siteList[0] = ["Site", "New", "Site"]
-#                               To: C:\\Different\Path\to\Site      Set: siteList[0] = ["Site", "Path", "Different\Path\to\Site"]
-#                               Leave in same location              Set: siteList[0] = ["Site", "", ""]
-
-siteList = [None] * 34
-
-siteList[0] = ["Babes", "New", "New\Babes"]
-siteList[1] = ["BrattySis", "New", "Bratty Sis"]
-siteList[2] = ["CreampieAngels", "New", "New\Creampie-Angels"]
-siteList[3] = ["Cum4K", "New", "Cum4K"]
-siteList[4] = ["DaneJones", "New", "Dane Jones"]
-siteList[5] = ["FamilyStrokes", "New", "New\Family Strokes"]
-siteList[6] = ["JaysPOV", "New", "Jays POV"]
-siteList[7] = ["Lubed", "New", "Lubed"]
-siteList[8] = ["MissaX", "New", "New\MissaX"]
-siteList[9] = ["MomsBangTeens", "New", "Moms Bang Teens"]
-siteList[10] = ["DetentionGirls", "New", "Nubiles\Detention Girls"]
-siteList[11] = ["DriverXXX", "New", "Nubiles\Driver XXX"]
-siteList[12] = ["MomsTeachSex", "New", "Nubiles\Moms Teach Sex"]
-siteList[13] = ["MyFamilyPies", "New", "Nubiles\My Family Pies"]
-siteList[14] = ["NubileFilms", "New", "Nubiles\Nubile Films"]
-siteList[15] = ["Nubiles", "New", "Nubiles\Nubiles"]
-siteList[16] = ["NubilesET", "New", "Nubiles\Nubiles ET"]
-siteList[17] = ["NubilesPorn", "New", "Nubiles\Nubiles Porn"]
-siteList[18] = ["PetiteHDPorn", "New", "Nubiles\Petite HD Porn"]
-siteList[19] = ["StepSiblingsCaught", "New", "Nubiles\Step Siblings Caught"]
-siteList[20] = ["TeacherFucksTeens", "New", "Nubiles\Teacher Fucks Teens"]
-siteList[21] = ["PassionHD", "New", "Passion HD"]
-siteList[22] = ["PublicAgent", "New", "New\Public Agent"]
-siteList[23] = ["SexArt", "New", "New\SexArt"]
-siteList[24] = ["SisLovesMe", "New", "Sis Loves Me"]
-siteList[25] = ["SpyFam", "New", "SpyFam"]
-siteList[26] = ["Vixen", "New", "New\Vixen"]
-siteList[27] = ["XArt", "New", "X-Art"]
-siteList[28] = ["LittleCaprice", "New", "Women\Caprice"]
-siteList[29] = ["ShareMyBF", "New", "Share My BF"]
-siteList[30] = ["StepSiblings", "New", "New\Step Siblings"]
-siteList[31] = ["Tiny4K", "New", "Tiny4K"]
-siteList[32] = ["NannySpy", "New", "NannySpy"]
-siteList[33] = ["PrincessCum", "New", "Nubiles\Princess Cum"]
-
 
 def getSiteMatch(site, dir):
     logger.debug(" Before:")
@@ -92,7 +42,7 @@ def getRename(site, actor, title, date):
             if releaseDate == date:
                 return title
             i += 1
-    #LITTLE CAPRICE
+    #LITTLE CAPRICE DREAMS
     if site.lower() == "littlecaprice":
         page = requests.get('https://www.littlecaprice-dreams.com/videos/')
         detailsPageElements = html.fromstring(page.content)
