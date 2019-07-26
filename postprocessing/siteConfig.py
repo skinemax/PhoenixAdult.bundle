@@ -3,16 +3,18 @@
 #real or test rename
 dryrun=False
 #delete extra files and empty folder after rename
-cleanup=False
+cleanup=True
 sab_cleanup=True
 #debug logging
 debug=True
 
-#logger errors if doing a batch file rename? set to true
+#Permission Error if doing a batch file rename? set to true
 batch=False
 
 log_location = 'C:\Program Files\SABnzbd\scripts\pa_post.log'
 #linux example '/usr/local/sabnzbd/var/logs/pa_post.log'
+
+use_filename=False
 
 
 #Media Info is a beta option and will require you to install two things.
