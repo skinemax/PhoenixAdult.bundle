@@ -28,10 +28,9 @@ def pa_parse_dir(dir, use_filename):
     search_string = search_string.split('\\')[-1]
     search_string = search_string.split('.XXX')[0]
     search_string = search_string.split(' XXX')[0]
-    dir_pattern = re.compile(r'^([a-zA-Z0-9-]+)[\s|.]([0-9]{2,4})[\s|.]([0-9]{2})[\s|.]([0-9]{2})[\s|.]([\s.a-zA-Z0-9]+)')
+    dir_pattern = re.compile(r'^([a-zA-Z0-9-]+)(\s|.|\s-\s)(([0-9]{2,4})[\s|.]([0-9]{2})[\s|.]([0-9]{2})[\s|.]([\s.a-zA-Z0-9]+)|([\s.a-zA-Z0-9]+)[\s|.][(]([0-9]{2,4})[\s|.-]([0-9]{2})[\s|.-]([0-9]{2})[)])')
     if use_filename:
         search_string = search_string.split('.')[0]
-        dir_pattern = re.compile(r'^([a-zA-Z0-9-]+)(\s|.|\s-\s)(([0-9]{2,4})[\s|.]([0-9]{2})[\s|.]([0-9]{2})[\s|.]([\s.a-zA-Z0-9]+)|([\s.a-zA-Z0-9]+)[\s|.][(]([0-9]{2,4})[\s|.-]([0-9]{2})[\s|.-]([0-9]{2})[)])')
     
 
     match_object = re.search(dir_pattern, search_string)
@@ -50,11 +49,11 @@ def pa_parse_dir(dir, use_filename):
         month = match_object.group(10)
         day = match_object.group(11)
         title = match_object.group(8)
-    elif match_object.group(5) is not None:
-        year = match_object.group(2)
-        month = match_object.group(3)
-        day = match_object.group(4)
-        title = match_object.group(5)
+    elif match_object.group(4) is not None:
+        year = match_object.group(4)
+        month = match_object.group(5)
+        day = match_object.group(6)
+        title = match_object.group(7)
     date = year + " " + month + " " + day
     if len(year) == 2:
         format = '%y %m %d'
