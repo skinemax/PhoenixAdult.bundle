@@ -70,11 +70,11 @@ def main():
         for item in os.listdir(dir):
             fullfilepath = os.path.join(dir, item)
             try:
-                shoot = pa_parse_dir(fullfilepath) 
+                shoot = pa_parse_dir(fullfilepath, use_filename) 
             except:
                 pass
     else:
-        shoot = pa_parse_dir(dir)
+        shoot = pa_parse_dir(dir, use_filename)
         
     logger.debug("Full shoot dict:")
     logger.debug(shoot)
