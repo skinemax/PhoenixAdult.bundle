@@ -95,31 +95,16 @@ def getRename(site, actor, title, date):
                 return title
             i += 1
     # NUBILES NETWORK
-    elif site.lower() in ["anilos", "brattysis", "hotcrazymess", "nfbusty", "nubilefilms", "nubilesnet", "thatsitcomshow"]:
-        if site.lower() == "brattysis":
-            page = requests.get('https://brattysis.com/video/gallery')
-        elif site.lower() == "nubilefilms":
-            page = requests.get('https://nubilefilms.com/video/gallery')
-        else:
-            url = "https://" + site.lower() + "/video/gallery"
-            page = requests.get(url)
-
-        detailsPageElements = html.fromstring(page.content)
-        i = 0
-        for releaseDate in detailsPageElements.xpath('//div[contains(@class, "content-grid-item")]//span[@class= "date"]/text()'):
-            sceneID = detailsPageElements.xpath('//div[contains(@class, "content-grid-item")]//a[@class= "title"]')[i].get("href").split('/')[3]
-            title = detailsPageElements.xpath('//div[contains(@class, "content-grid-item")]//a[@class= "title"]/text()')[i].split('-')[0]
-            title = sceneID + " - " + title
-            #date format is (Mon d, yyyy) ... convert it to yyyy-mm-dd
-            datetime_object = datetime.strptime(releaseDate, '%b %d, %Y')
-            releaseDate = datetime_object.strftime('%Y-%m-%d')
-            if releaseDate == date:
-                return title
-            i += 1
-    elif site.lower() in ["badteenspunished", "bountyhunterporn", "daddyslilangel", "detentiongirls", "driverxxx", "momsteachsex", "myfamilypies", "nubilescasting", "nubileset", "nubilesporn", "nubilesunscripted", "petiteballerinasfucked", "petitehdporn", "princesscum", "stepsiblingscaught", "teacherfucksteens"]:
+    elif site.lower() in ["anilos", "badteenspunished", "brattysis", "bountyhunterporn", "daddyslilangel", "detentiongirls", "driverxxx", "hotcrazymess", "momsteachsex", "myfamilypies", "nfbusty", "nubilefilms", "nubilescasting", "nubileset", "nubilesnet", "nubilesporn", "nubilesunscripted", "petiteballerinasfucked", "petitehdporn", "princesscum", "stepsiblingscaught", "teacherfucksteens", "thatsitcomshow"]:
         #in theory you could add more pages "/30" "/45" etc to do a backdated match
-        for url in ["", "/15"]:
-            page = requests.get("https://nubiles-porn.com/video/gallery" + url)
+        for pagenumber in ["", "16", "32", "48", "64"]:
+            if site.lower() in ["nubilesnet", "nubilesporn"]:
+                site = "nubiles-porn"
+            elif site.lower() == "nubilescasting":
+                site = "nubiles-casting"
+                
+            url = "https://" + site.lower() + ".com/video/gallery/" + pagenumber
+            page = requests.get(url)
             detailsPageElements = html.fromstring(page.content)
             i = 0
             for releaseDate in detailsPageElements.xpath('//div[contains(@class, "content-grid-item")]//span[@class= "date"]/text()'):
@@ -157,31 +142,32 @@ def getRename(site, actor, title, date):
 
     # PORN PROS NETWORK
     elif site.lower() in ["cum4k", "lubed", "nannyspy", "passionhd", "spyfam", "tiny4k"]:
-        if site.lower() == "cum4k":
-            page = requests.get('https://cum4k.com/?page=1')
-        elif site.lower() == "holed":
-            page = requests.get('https://holed.com/?page=1')
-        elif site.lower() == "lubed":
-            page = requests.get('https://lubed.com/?page=1')
-        elif site.lower() == "nannyspy":
-            page = requests.get('https://nannyspy.com/?page=1')
-        elif site.lower() == "passionhd":
-            page = requests.get('https://passion-hd.com/?page=1')
-        elif site.lower() == "spyfam":
-            page = requests.get('https://spyfam.com/?page=1')
-        elif site.lower() == "tiny4k":
-            page = requests.get('https://tiny4k.com/?page=1')
-        
-        detailsPageElements = html.fromstring(page.content)
-        i = 0
-        for releaseDate in detailsPageElements.xpath('//p[@class= "date"]/text()'):
-            title = detailsPageElements.xpath('//div[@class= "information"]/a')[i].get("href").split("/")[-1].replace('-', ' ')
-            #PornPros date format is (Month d, yyyy) ... convert it to yyyy-mm-dd
-            datetime_object = datetime.strptime(releaseDate, '%B %d, %Y')
-            releaseDate = datetime_object.strftime('%Y-%m-%d')
-            if releaseDate == date:
-                return title
-            i += 1
+        for pagenumber in range(10):
+            if site.lower() == "cum4k":
+                page = requests.get('https://cum4k.com/?page=' + str(pagenumber))
+            elif site.lower() == "holed":
+                page = requests.get('https://holed.com/?page=' + str(pagenumber))
+            elif site.lower() == "lubed":
+                page = requests.get('https://lubed.com/?page=' + str(pagenumber))
+            elif site.lower() == "nannyspy":
+                page = requests.get('https://nannyspy.com/?page=' + str(pagenumber))
+            elif site.lower() == "passionhd":
+                page = requests.get('https://passion-hd.com/?page=' + str(pagenumber))
+            elif site.lower() == "spyfam":
+                page = requests.get('https://spyfam.com/?page=' + str(pagenumber))
+            elif site.lower() == "tiny4k":
+                page = requests.get('https://tiny4k.com/?page=' + str(pagenumber))
+            
+            detailsPageElements = html.fromstring(page.content)
+            i = 0
+            for releaseDate in detailsPageElements.xpath('//p[@class= "date"]/text()'):
+                title = detailsPageElements.xpath('//div[@class= "information"]/a')[i].get("href").split("/")[-1].replace('-', ' ')
+                #PornPros date format is (Month d, yyyy) ... convert it to yyyy-mm-dd
+                datetime_object = datetime.strptime(releaseDate, '%B %d, %Y')
+                releaseDate = datetime_object.strftime('%Y-%m-%d')
+                if releaseDate == date:
+                    return title
+                i += 1
     # REALITY KINGS
     elif site.lower() in ["40inchplus", "8thstreetlatinas", "badtowtruck", "bignaturals", "bigtitsboss", "bikinicrashers", "captainstabbin", "cfnmsecret", "cumfiesta", "cumgirls", "dangerousdongs", "eurosexparties", "extremeasses", "extremenaturals", "firsttimeauditions", "flowertucci", "girlsofnaked", "happytugs", "hdlove", "hotbush", "inthevip", "mikeinbrazil", "mikesapartment", "milfhunter", "milfnextdoor", "momsbangteens", "momslickteens", "moneytalks", "monstercurves", "nofaces", "pure18", "realorgasms", "rkprime", "roundandbrown", "saturdaynightlatinas", "seemywife", "sneakysex", "streetblowjobs", "teamsquirt", "teenslovehugecocks", "topshelfpussy", "trannysurprise", "vipcrew", "welivetogether", "wivesinpantyhose"]:
         for url in ["1", "2"]:
