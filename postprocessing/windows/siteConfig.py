@@ -1,15 +1,40 @@
+#VARIABLES
+
+#real or test rename
+dryrun=False
+#logger errors if doing a batch file rename? set to true
+batch=False
+#delete extra files and empty folder after rename
+cleanup=False
+sab_cleanup=True
+#debug logging
+debug=True
+
+log_location = 'C:\Program Files\SABnzbd\scripts\pa_post.log'
+
+#Media Info is a beta option and will require you to install two things.
+# install pymedia info -> pip install pymediainfo
+# https://mediaarea.net/en/MediaInfo the MediaInfo.DLL file for your system (NOTE: I did find this must have already been installed on my system and was not nedded)
+
+#add mediainfo to folder name
+mediainfo=False
+sab_mediainfo=False
+#add media info to file name
+mediainfo2=False
+sab_mediainfo2=False
+
 #Customise your siteList by creating a new entry per site
 #Each collection entry needs a Sitename and directory adjustment information.
 
-#In this example sabnzbd downloads the scenes to C:\\Path\to\Porn\New and I want the final content to end up in site folders inside that folder.
+#In this example sabnzbd downloads the scenes to C:\\Path\to\Porn\Downloads and I want the final content to end up in site folders inside that folder.
 #We will keep only the portion of the path before siteList field 2
 #We will add siteList field 3 back onto whatever is remaining of the path
 
 #Examples
-#From C:\\Path\to\Porn\New      To: C:\\Path\to\Porn\New\Site       Set: siteList[0] = ["Site", "New", "New\Site"]
-#                               To: C:\\Path\to\Porn\Site           Set: siteList[0] = ["Site", "New", "Site"]
-#                               To: C:\\Different\Path\to\Site      Set: siteList[0] = ["Site", "Path", "Different\Path\to\Site"]
-#                               Leave in same location              Set: siteList[0] = ["Site", "", ""]
+#From C:\\Path\to\Porn\Downloads      To: C:\\Path\to\Porn\Downloads\Site   Set: siteList[0] = ["Site", "Downloads", "Downloads\Site"]
+#                                   To: C:\\Path\to\Porn\Site               Set: siteList[0] = ["Site", "Downloads", "Site"]
+#                                   To: C:\\Different\Path\to\Site          Set: siteList[0] = ["Site", "Path", "Different\Path\to\Site"]
+#                                   Leave in same location                  Set: siteList[0] = ["Site", "", ""]
 
 siteList = [None] * 34
 
