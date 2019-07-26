@@ -13,8 +13,7 @@ logger = logging.getLogger(__name__)
     #     'filename_title': 'Elsa Jean And Romi Rain The Secret Life Of A Housewife'
     # }
 # returns: None (if groks don't match)
-def pa_parse_dir(dir):
-    from siteConfig import use_filename
+def pa_parse_dir(dir, use_filename):
     
     shoot = {
         'studio': "",
