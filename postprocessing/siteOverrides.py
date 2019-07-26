@@ -69,7 +69,7 @@ def getRename(site, actor, title, date):
         
         for pagenumber in range(10):
         
-            page = requests.get("https://www.fakehub.com/scenes?page=" + pagenumber + "&site=" + site)
+            page = requests.get("https://www.fakehub.com/scenes?page=" + str(pagenumber) + "&site=" + site)
             detailsPageElements = html.fromstring(page.content)
             i = 0
             for releaseDate in detailsPageElements.xpath('//div[@class="dtkdna-5 bUqDss"][1]/text()'):
@@ -142,7 +142,7 @@ def getRename(site, actor, title, date):
             site = "201"
             
         for pagenumber in range(10):
-            page = requests.get("https://www.mofos.com/scenes?page=" + pagenumber + "&site=" + site)        
+            page = requests.get("https://www.mofos.com/scenes?page=" + str(pagenumber) + "&site=" + site)        
             detailsPageElements = html.fromstring(page.content)
             i = 0
             for releaseDate in detailsPageElements.xpath('//div[@class="dtkdna-5 bUqDss"][1]/text()'):
@@ -154,7 +154,7 @@ def getRename(site, actor, title, date):
                 if releaseDate == date:
                     return title
                 i += 1
-                
+
     # PORN PROS NETWORK
     elif site.lower() in ["cum4k", "lubed", "nannyspy", "passionhd", "spyfam", "tiny4k"]:
         if site.lower() == "cum4k":
