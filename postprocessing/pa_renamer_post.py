@@ -69,13 +69,20 @@ def main():
     if use_filename:
         for item in os.listdir(dir):
             fullfilepath = os.path.join(dir, item)
-            try:
-                shoot = pa_parse_dir(fullfilepath, use_filename) 
-            except:
-                pass
+            if os.path.getsize(fullfilepath) > 50000000:
+                shoot = pa_parse_dir(fullfilepath, use_filename)
+                success = renameShoot(shoot, dir, dryrun, cleanup, mediainfo, mediainfo2, use_filename)
     else:
         shoot = pa_parse_dir(dir, use_filename)
+        success = renameShoot(shoot, dir, dryrun, cleanup, mediainfo, mediainfo2, use_filename)
+    
+    if success:
+        logger.info(" Successful")
         
+        
+def renameShoot(shoot, dir, dryrun, cleanup, mediainfo, mediainfo2, use_filename):
+    from siteConfig import debug
+    logger = logging.getLogger('pa_renamer')
     logger.debug("Full shoot dict:")
     logger.debug(shoot)
     # shoot = {
@@ -143,7 +150,9 @@ def main():
                     logger.info(" Empty Directory Deleted")
                 except:
                     pass
-        logger.info(" Successful")
+            if use_filename:
+                return True
+        return True
                 
     else:
         logger.critical("No match found for dir: %s" % dir)
