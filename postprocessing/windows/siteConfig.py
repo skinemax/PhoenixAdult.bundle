@@ -2,15 +2,18 @@
 
 #real or test rename
 dryrun=False
-#logger errors if doing a batch file rename? set to true
-batch=False
 #delete extra files and empty folder after rename
 cleanup=False
 sab_cleanup=True
 #debug logging
 debug=True
 
+#logger errors if doing a batch file rename? set to true
+batch=False
+
 log_location = 'C:\Program Files\SABnzbd\scripts\pa_post.log'
+#linux example '/usr/local/sabnzbd/var/logs/pa_post.log'
+
 
 #Media Info is a beta option and will require you to install two things.
 # install pymedia info -> pip install pymediainfo
