@@ -14,11 +14,14 @@ logger = logging.getLogger(__name__)
     # }
 # returns: None (if groks don't match)
 def pa_parse_dir(dir):
+    from siteConfig import use_filename
+    
     shoot = {
         'studio': "",
         'date': "",
         'filename_title': ""
     }
+    
     search_string = dir
     logger.info("The Dir is: %s" % search_string)
 
@@ -27,6 +30,9 @@ def pa_parse_dir(dir):
     search_string = search_string.split('.XXX')[0]
     search_string = search_string.split(' XXX')[0]
     dir_pattern = re.compile(r'^([a-zA-Z0-9-]+)[\s|.]([0-9]{2,4})[\s|.]([0-9]{2})[\s|.]([0-9]{2})[\s|.]([\s.a-zA-Z0-9]+)')
+    if use_filename:
+        search_string = search_string.split('.')[0]
+        dir_pattern = re.compile(r'^([a-zA-Z0-9-]+)(\s|.|\s-\s)(([0-9]{2,4})[\s|.]([0-9]{2})[\s|.]([0-9]{2})[\s|.]([\s.a-zA-Z0-9]+)|([\s.a-zA-Z0-9]+)[\s|.][(]([0-9]{2,4})[\s|.-]([0-9]{2})[\s|.-]([0-9]{2})[)])')
     
 
     match_object = re.search(dir_pattern, search_string)
@@ -35,14 +41,21 @@ def pa_parse_dir(dir):
         return None
 
     # Studio Match
-    # TODO: determine based on collections.txt
+    # TODO: determine based on collections.py
 
     shoot['studio'] = match_object.group(1).replace('-','')
 
-    # Date match
-    year = match_object.group(2)
-    month = match_object.group(3)
-    day = match_object.group(4)
+    # Segment matches
+    if use_filename:
+        year = match_object.group(9)
+        month = match_object.group(10)
+        day = match_object.group(11)
+        title = match_object.group(8)
+    else:
+        year = match_object.group(2)
+        month = match_object.group(3)
+        day = match_object.group(4)
+        title = match_object.group(5)
     date = year + " " + month + " " + day
     if len(year) == 2:
         format = '%y %m %d'
@@ -58,7 +71,7 @@ def pa_parse_dir(dir):
     # Rest of filename match
     # TODO: should determine if we are title based or date/model based and output
     # appropriately
-    title = match_object.group(5)
+    
     shoot['filename_title'] = title.replace('.',' ')
 
     return shoot
