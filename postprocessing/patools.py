@@ -14,7 +14,6 @@ logger = logging.getLogger(__name__)
     # }
 # returns: None (if groks don't match)
 def pa_parse_dir(dir, use_filename):
-    
     shoot = {
         'studio': "",
         'date': "",
@@ -28,7 +27,7 @@ def pa_parse_dir(dir, use_filename):
     search_string = search_string.split('\\')[-1]
     search_string = search_string.split('.XXX')[0]
     search_string = search_string.split(' XXX')[0]
-    dir_pattern = re.compile(r'^([a-zA-Z0-9-]+)(\s|.|\s-\s)(([0-9]{2,4})[\s|.]([0-9]{2})[\s|.]([0-9]{2})[\s|.]([\s.a-zA-Z0-9]+)|([\s.a-zA-Z0-9]+)[\s|.][(]([0-9]{2,4})[\s|.-]([0-9]{2})[\s|.-]([0-9]{2})[)])')
+    dir_pattern = re.compile(r'^([a-zA-Z0-9-]+)(\s|.|\s-\s)(([0-9]{2,4})[\s|.]([0-9]{2})[\s|.]([0-9]{2})[\s|.]([\s.a-zA-Z0-9]+)|([\s.a-zA-Z0-9]+)[\s|.|\s(]([0-9]{2,4})[\s|.-]([0-9]{2})[\s|.-]([0-9]{2}))')
     if use_filename:
         search_string = search_string.split('.')[0]
     
