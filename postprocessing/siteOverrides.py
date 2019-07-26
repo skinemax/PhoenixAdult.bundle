@@ -67,18 +67,20 @@ def getRename(site, actor, title, date):
         elif site.lower() == "publicagent":
             site = "282"
         
-        page = requests.get("https://www.fakehub.com/scenes?page=1&site=" + site)
-        detailsPageElements = html.fromstring(page.content)
-        i = 0
-        for releaseDate in detailsPageElements.xpath('//div[@class="dtkdna-5 bUqDss"][1]/text()'):
-            sceneID = detailsPageElements.xpath('//span[contains(@class, "dtkdna-5")]/a')[i].get('href').split("/")[2]
-            title = sceneID + " - " + detailsPageElements.xpath('//span[contains(@class, "dtkdna-5")]/a/text()')[i]
-            #FakeHub date format is (Mon dd, yyyy) ... convert it to yyyy-mm-dd
-            datetime_object = datetime.strptime(releaseDate, '%b %d, %Y')
-            releaseDate = datetime_object.strftime('%Y-%m-%d')
-            if releaseDate == date:
-                return title
-            i += 1
+        for pagenumber in range(10):
+        
+            page = requests.get("https://www.fakehub.com/scenes?page=" + pagenumber + "&site=" + site)
+            detailsPageElements = html.fromstring(page.content)
+            i = 0
+            for releaseDate in detailsPageElements.xpath('//div[@class="dtkdna-5 bUqDss"][1]/text()'):
+                sceneID = detailsPageElements.xpath('//span[contains(@class, "dtkdna-5")]/a')[i].get('href').split("/")[2]
+                title = sceneID + " - " + detailsPageElements.xpath('//span[contains(@class, "dtkdna-5")]/a/text()')[i]
+                #FakeHub date format is (Mon dd, yyyy) ... convert it to yyyy-mm-dd
+                datetime_object = datetime.strptime(releaseDate, '%b %d, %Y')
+                releaseDate = datetime_object.strftime('%Y-%m-%d')
+                if releaseDate == date:
+                    return title
+                i += 1
     #LITTLE CAPRICE DREAMS
     if site.lower() == "littlecaprice":
         page = requests.get('https://www.littlecaprice-dreams.com/videos/')
@@ -139,18 +141,20 @@ def getRename(site, actor, title, date):
         if site.lower() == "sharemybf":
             site = "201"
             
-        page = requests.get("https://www.mofos.com/scenes?page=1&site=" + site)        
-        detailsPageElements = html.fromstring(page.content)
-        i = 0
-        for releaseDate in detailsPageElements.xpath('//div[@class="dtkdna-5 bUqDss"][1]/text()'):
-            sceneID = detailsPageElements.xpath('//span[contains(@class, "dtkdna-5")]/a')[i].get('href').split("/")[2]
-            title = sceneID + " - " + detailsPageElements.xpath('//span[contains(@class, "dtkdna-5")]/a/text()')[i]
-            #Mofos date format is (Mon dd, yyyy) ... convert it to yyyy-mm-dd
-            datetime_object = datetime.strptime(releaseDate, '%b %d, %Y')
-            releaseDate = datetime_object.strftime('%Y-%m-%d')
-            if releaseDate == date:
-                return title
-            i += 1
+        for pagenumber in range(10):
+            page = requests.get("https://www.mofos.com/scenes?page=" + pagenumber + "&site=" + site)        
+            detailsPageElements = html.fromstring(page.content)
+            i = 0
+            for releaseDate in detailsPageElements.xpath('//div[@class="dtkdna-5 bUqDss"][1]/text()'):
+                sceneID = detailsPageElements.xpath('//span[contains(@class, "dtkdna-5")]/a')[i].get('href').split("/")[2]
+                title = sceneID + " - " + detailsPageElements.xpath('//span[contains(@class, "dtkdna-5")]/a/text()')[i]
+                #Mofos date format is (Mon dd, yyyy) ... convert it to yyyy-mm-dd
+                datetime_object = datetime.strptime(releaseDate, '%b %d, %Y')
+                releaseDate = datetime_object.strftime('%Y-%m-%d')
+                if releaseDate == date:
+                    return title
+                i += 1
+                
     # PORN PROS NETWORK
     elif site.lower() in ["cum4k", "lubed", "nannyspy", "passionhd", "spyfam", "tiny4k"]:
         if site.lower() == "cum4k":
