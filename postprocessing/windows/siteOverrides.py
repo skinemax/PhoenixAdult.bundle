@@ -2,7 +2,7 @@ from datetime import datetime
 from lxml import html
 import requests
 import logging
-from siteConfig import *
+from siteConfig import siteList
 
 logger = logging.getLogger(__name__)
 
