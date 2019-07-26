@@ -16,8 +16,7 @@ from patools import pa_parse_dir
 import siteOverrides
 
 def main():
-    from siteConfig import dryrun, batch, cleanup, sab_cleanup, mediainfo, sab_mediainfo, mediainfo2, sab_mediainfo2, debug, log_location
-    
+    from siteConfig import dryrun, batch, cleanup, sab_cleanup, mediainfo, sab_mediainfo, mediainfo2, sab_mediainfo2, debug, log_location, use_filename
     if "SAB_VERSION" in os.environ:
         (scriptname,dir,orgnzbname,jobname,reportnumber,category,group,postprocstatus,url) = sys.argv
         cleanup = sab_cleanup
@@ -31,6 +30,7 @@ def main():
         parser.add_argument("-c", "--cleanup", help="Delete leftover files and cleanup folders after rename", action="store_true")
         parser.add_argument("-m", "--mediainfo", help="Add media info to the folder. Resolution and framerate", action="store_true")
         parser.add_argument("-m2", "--mediainfo2", help="Add media info to the filename. Resolution and framerate", action="store_true")
+        parser.add_argument("-n", "--filerename", help="Use the filename instead of the folder name. Not recommended", action="stroe_true")
         args = parser.parse_args()
         if args.dryrun:
             print "Dry-run mode enabled."
@@ -47,6 +47,9 @@ def main():
         if args.mediainfo2:
             print "File MediaInfo enabled."
             mediainfo2=True
+        if args.filerename:
+            print "Using FileName."
+            use_filename=True
         dir = args.directory
 
     if debug:
@@ -62,8 +65,17 @@ def main():
         logger.addHandler(hdlr)
 
     logger.info("Starting to process: %s" % dir)
-
-    shoot = pa_parse_dir(dir)
+    
+    if use_filename:
+        for item in os.listdir(dir):
+            fullfilepath = os.path.join(dir, item)
+            try:
+                shoot = pa_parse_dir(fullfilepath) 
+            except:
+                pass
+    else:
+        shoot = pa_parse_dir(dir)
+        
     logger.debug("Full shoot dict:")
     logger.debug(shoot)
     # shoot = {
