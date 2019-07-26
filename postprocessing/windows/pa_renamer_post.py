@@ -2,12 +2,10 @@
 # !/usr/bin/env python
 
 # point sabnzbd to this file for automated postprocessing
-# configure and customise siteOverrides.py
+# configure and customise siteConfig.py
 # install lxml if required -> pip install lxml
 
-#Media Info is a beta option and will require you to install two things.
-# install pymedia info -> pip install pymediainfo
-# https://mediaarea.net/en/MediaInfo the MediaInfo.DLL file for your system (NOTE: I did find this must have already been installed on my system and was not nedded)
+
 
 import sys
 import os, glob, shutil
@@ -18,17 +16,13 @@ from patools import pa_parse_dir
 import siteOverrides
 
 def main():
-    dryrun=False
-    batch=False
-    cleanup=False
-    mediainfo=False
-    mediainfo2=False
+    from siteConfig import dryrun, batch, cleanup, sab_cleanup, mediainfo, sab_mediainfo, mediainfo2, sab_mediainfo2, debug, log_location
+    
     if "SAB_VERSION" in os.environ:
         (scriptname,dir,orgnzbname,jobname,reportnumber,category,group,postprocstatus,url) = sys.argv
-        # set to True/False to enable/Disable when using sabnzbd
-        cleanup=False
-        mediainfo=False
-        mediainfo2=False
+        cleanup = sab_cleanup
+        mediainfo = sab_mediainfo
+        mediainfo2 = sab_mediainfo2
     else:
         parser = argparse.ArgumentParser(description='Rename adult media downloads for import into Plex with the PhoenixAdult metadat agent')
         parser.add_argument("directory")
@@ -55,8 +49,6 @@ def main():
             mediainfo2=True
         dir = args.directory
 
-    debug=False
-
     if debug:
         logging.basicConfig(level=logging.DEBUG)
     else:
@@ -65,7 +57,7 @@ def main():
     logger = logging.getLogger('pa_renamer')
     formatter = logging.Formatter('%(asctime)s %(name)-12s %(levelname)-8s %(message)s')
     if not dryrun and not batch:
-        hdlr = logging.FileHandler('C:\Program Files\SABnzbd\scripts\pa_post.log')
+        hdlr = logging.FileHandler(log_location)
         hdlr.setFormatter(formatter)
         logger.addHandler(hdlr)
 
