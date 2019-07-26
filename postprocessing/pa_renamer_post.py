@@ -76,8 +76,11 @@ def main():
         shoot = pa_parse_dir(dir, use_filename)
         success = renameShoot(shoot, dir, dryrun, cleanup, mediainfo, mediainfo2, use_filename)
     
-    if success:
-        logger.info(" Successful")
+    try:
+        if success:
+            logger.info(" Successful")
+    except:
+        logger.info(" Unsuccessful")
         
         
 def renameShoot(shoot, dir, dryrun, cleanup, mediainfo, mediainfo2, use_filename):
