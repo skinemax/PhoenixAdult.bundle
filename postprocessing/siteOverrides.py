@@ -42,6 +42,43 @@ def getRename(site, actor, title, date):
             if releaseDate == date:
                 return title
             i += 1
+    #FAKEHUB NETWORK
+    elif site.lower() in ["fakeagent", "fakeagentuk", "fakecop", "fakedrivingschool", "fakehospital", "fakehostel", "fakehuboriginals", "faketaxi", "femaleagent", "femalefaketaxi", "publicagent"]:
+        if site.lower() == "fakeagent":
+            site = "281"
+        elif site.lower() == "fakeagentuk":
+            site = "277"
+        elif site.lower() == "fakecop":
+            site = "278"
+        elif site.lower() == "fakedrivingschool":
+            site = "285"
+        elif site.lower() == "fakehospital":
+            site = "279"
+        elif site.lower() == "fakehostel":
+            site = "288"
+        elif site.lower() == "fakehuboriginals":
+            site = "287"
+        elif site.lower() == "faketaxi":
+            site = "281"
+        elif site.lower() == "femaleagent":
+            site = "283"
+        elif site.lower() == "femalefaketaxi":
+            site = "284"
+        elif site.lower() == "publicagent":
+            site = "282"
+        
+        page = requests.get("https://www.fakehub.com/scenes?page=1&site=" + site)
+        detailsPageElements = html.fromstring(page.content)
+        i = 0
+        for releaseDate in detailsPageElements.xpath('//div[@class="dtkdna-5 bUqDss"][1]/text()'):
+            sceneID = detailsPageElements.xpath('//span[contains(@class, "dtkdna-5")]/a')[i].get('href').split("/")[2]
+            title = sceneID + " - " + detailsPageElements.xpath('//span[contains(@class, "dtkdna-5")]/a/text()')[i]
+            #FakeHub date format is (Mon dd, yyyy) ... convert it to yyyy-mm-dd
+            datetime_object = datetime.strptime(releaseDate, '%b %d, %Y')
+            releaseDate = datetime_object.strftime('%Y-%m-%d')
+            if releaseDate == date:
+                return title
+            i += 1
     #LITTLE CAPRICE DREAMS
     if site.lower() == "littlecaprice":
         page = requests.get('https://www.littlecaprice-dreams.com/videos/')
@@ -102,14 +139,12 @@ def getRename(site, actor, title, date):
         if site.lower() == "sharemybf":
             site = "201"
             
-        page = requests.get("https://www.mofos.com/scenes?page=1&site=" + site)
+        page = requests.get("https://www.mofos.com/scenes?page=1&site=" + site)        
         detailsPageElements = html.fromstring(page.content)
         i = 0
         for releaseDate in detailsPageElements.xpath('//div[@class="dtkdna-5 bUqDss"][1]/text()'):
-            print releaseDate
             sceneID = detailsPageElements.xpath('//span[contains(@class, "dtkdna-5")]/a')[i].get('href').split("/")[2]
             title = sceneID + " - " + detailsPageElements.xpath('//span[contains(@class, "dtkdna-5")]/a/text()')[i]
-            print title
             #Mofos date format is (Mon dd, yyyy) ... convert it to yyyy-mm-dd
             datetime_object = datetime.strptime(releaseDate, '%b %d, %Y')
             releaseDate = datetime_object.strftime('%Y-%m-%d')
