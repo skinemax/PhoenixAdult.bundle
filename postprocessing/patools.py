@@ -45,12 +45,12 @@ def pa_parse_dir(dir, use_filename):
     shoot['studio'] = match_object.group(1).replace('-','')
 
     # Segment matches
-    if use_filename:
+    if match_object.group(9) is not None:
         year = match_object.group(9)
         month = match_object.group(10)
         day = match_object.group(11)
         title = match_object.group(8)
-    else:
+    elif match_object.group(5) is not None:
         year = match_object.group(2)
         month = match_object.group(3)
         day = match_object.group(4)
