@@ -30,7 +30,7 @@ def main():
         parser.add_argument("-c", "--cleanup", help="Delete leftover files and cleanup folders after rename", action="store_true")
         parser.add_argument("-m", "--mediainfo", help="Add media info to the folder. Resolution and framerate", action="store_true")
         parser.add_argument("-m2", "--mediainfo2", help="Add media info to the filename. Resolution and framerate", action="store_true")
-        parser.add_argument("-n", "--filerename", help="Use the filename instead of the folder name. Not recommended", action="stroe_true")
+        parser.add_argument("-n", "--filerename", help="Use the filename instead of the folder name. Not recommended", action="store_true")
         args = parser.parse_args()
         if args.dryrun:
             print "Dry-run mode enabled."
