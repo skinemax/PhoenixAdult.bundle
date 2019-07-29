@@ -71,10 +71,10 @@ def main():
             fullfilepath = os.path.join(dir, item)
             if os.path.getsize(fullfilepath) > 50000000:
                 shoot = pa_parse_dir(fullfilepath, use_filename)
-                success = renameShoot(shoot, dir, dryrun, cleanup, mediainfo, mediainfo2, use_filename)
+                success = renameShoot(shoot, dir, fullfilepath, dryrun, cleanup, mediainfo, mediainfo2, use_filename)
     else:
         shoot = pa_parse_dir(dir, use_filename)
-        success = renameShoot(shoot, dir, dryrun, cleanup, mediainfo, mediainfo2, use_filename)
+        success = renameShoot(shoot, dir, dir, dryrun, cleanup, mediainfo, mediainfo2, use_filename)
     
     try:
         if success:
@@ -83,7 +83,7 @@ def main():
         logger.info(" Unsuccessful")
         
         
-def renameShoot(shoot, dir, dryrun, cleanup, mediainfo, mediainfo2, use_filename):
+def renameShoot(shoot, dir, fullfilepath, dryrun, cleanup, mediainfo, mediainfo2, use_filename):
     from siteConfig import debug
     logger = logging.getLogger('pa_renamer')
     logger.debug("Full shoot dict:")
@@ -107,7 +107,8 @@ def renameShoot(shoot, dir, dryrun, cleanup, mediainfo, mediainfo2, use_filename
         correctName = siteOverrides.getRename(shoot['studio'], "filleractor", shoot['filename_title'], shoot['date'])
 
         for item in os.listdir(dir):
-            fullfilepath = os.path.join(dir, item)
+            if not use_filename:
+                fullfilepath = os.path.join(dir, item)
             filetype = item.split('.')[-1]
             logger.debug(" The filetype is: %s" % filetype)
             #if the file is over 50MB rename it
