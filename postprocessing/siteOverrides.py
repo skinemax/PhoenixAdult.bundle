@@ -116,7 +116,11 @@ def getRename(site, actor, title, date):
                 releaseDate = datetime_object.strftime('%Y-%m-%d')                
                 
                 #extra check due to possibility of multiple releases on one date
-                releaseSite = detailsPageElements.xpath('//div[contains(@class, "content-grid-item")]//a[@class= "site-link"]/text()')[i].replace("-", "").strip()
+                if site == "nubile-porn":
+                    releaseSite = detailsPageElements.xpath('//div[contains(@class, "content-grid-item")]//a[@class= "site-link"]/text()')[i].replace("-", "").strip()
+                else:
+                    releaseSite = site
+                    
                 if releaseDate == date and site.lower() == releaseSite.lower():
                     return title
                 i += 1       
@@ -200,7 +204,7 @@ def getRename(site, actor, title, date):
                 return title
             i += 1
     #VIXEN
-    elif site.lower() == "vixentest":
+    elif site.lower() == "vixen":
         page = requests.get('https://www.vixen.com/search?q=' + title)
         detailsPageElements = html.fromstring(page.content)
         i = 0
@@ -209,12 +213,13 @@ def getRename(site, actor, title, date):
             scenepage = requests.get(scenePage)
             scenePageElements = html.fromstring(scenepage.content)
             
-            #date is hidden by javascript. Json scraper might be able to retriev eit, need to work out how
-            releaseDate = scenePageElements.xpath('//button[@title="Release date"]/span')[0].text_content()
-            title = scenePageElements.xpath('//h1[@data-test-component="VideoTitle"]/text()')
-            #Vixen date format is (Month d, yyyy) ... convert it to yyyy-mm-dd
-            datetime_object = datetime.strptime(releaseDate, '%B %d, %Y')
-            releaseDate = datetime_object.strftime('%Y-%m-%d')
+            #date is hidden by javascript.
+            tmp = scenePageElements.xpath('//script[contains(text(), "uploadDate")]')[0].text_content()
+            k = tmp.find("uploadDate")
+            releaseDate = tmp[k+13:k+23]
+            title = scenePageElements.xpath('//h1[@data-test-component="VideoTitle"]/text()')[0]
+            print title
+           
             if releaseDate == date:
                 return title
             i += 1
