@@ -28,22 +28,10 @@ def getRename(site, actor, title, date):
     
   
     
-    #DANE JONES
-    if site.lower() == "danejones":
-        page = requests.get('https://www.danejones.com/tour/videos')
-        detailsPageElements = html.fromstring(page.content)
-        i = 0
-        for scene in detailsPageElements.xpath('//article'):
-            releaseDate = detailsPageElements.xpath('//article//div[@class ="release-date"]/text()')[i]
-            title = detailsPageElements.xpath('//article//div[@class ="card-title"]/a')[i].get("title")
-            #Danejones date format is (Month d, yyyy) ... convert it to yyyy-mm-dd
-            datetime_object = datetime.strptime(releaseDate, '%B %d, %Y')
-            releaseDate = datetime_object.strftime('%Y-%m-%d')
-            if releaseDate == date:
-                return title
-            i += 1
+    
+   
     #FAKEHUB NETWORK
-    elif site.lower() in ["fakeagent", "fakeagentuk", "fakecop", "fakedrivingschool", "fakehospital", "fakehostel", "fakehuboriginals", "faketaxi", "femaleagent", "femalefaketaxi", "publicagent"]:
+    if site.lower() in ["fakeagent", "fakeagentuk", "fakecop", "fakedrivingschool", "fakehospital", "fakehostel", "fakehuboriginals", "faketaxi", "femaleagent", "femalefaketaxi", "publicagent"]:
         if site.lower() == "fakeagent":
             site = "281"
         elif site.lower() == "fakeagentuk":
@@ -67,7 +55,7 @@ def getRename(site, actor, title, date):
         elif site.lower() == "publicagent":
             site = "282"
         
-        for pagenumber in range(10):
+        for pagenumber in range(1, 10):
         
             page = requests.get("https://www.fakehub.com/scenes?page=" + str(pagenumber) + "&site=" + site)
             detailsPageElements = html.fromstring(page.content)
@@ -82,7 +70,7 @@ def getRename(site, actor, title, date):
                     return title
                 i += 1
     #LITTLE CAPRICE DREAMS
-    if site.lower() == "littlecaprice":
+    if site.lower() == "littlecapricedreams":
         page = requests.get('https://www.littlecaprice-dreams.com/videos/')
         detailsPageElements = html.fromstring(page.content)
         i = 0
@@ -130,7 +118,7 @@ def getRename(site, actor, title, date):
         if site.lower() == "sharemybf":
             site = "201"
             
-        for pagenumber in range(10):
+        for pagenumber in range(1,10):
             page = requests.get("https://www.mofos.com/scenes?page=" + str(pagenumber) + "&site=" + site)        
             detailsPageElements = html.fromstring(page.content)
             i = 0
@@ -146,7 +134,7 @@ def getRename(site, actor, title, date):
 
     # PORN PROS NETWORK
     elif site.lower() in ["cum4k", "lubed", "nannyspy", "passionhd", "spyfam", "tiny4k"]:
-        for pagenumber in range(10):
+        for pagenumber in range(1,10):
             if site.lower() == "cum4k":
                 page = requests.get('https://cum4k.com/?page=' + str(pagenumber))
             elif site.lower() == "holed":
@@ -174,21 +162,60 @@ def getRename(site, actor, title, date):
                 i += 1
     # REALITY KINGS
     elif site.lower() in ["40inchplus", "8thstreetlatinas", "badtowtruck", "bignaturals", "bigtitsboss", "bikinicrashers", "captainstabbin", "cfnmsecret", "cumfiesta", "cumgirls", "dangerousdongs", "eurosexparties", "extremeasses", "extremenaturals", "firsttimeauditions", "flowertucci", "girlsofnaked", "happytugs", "hdlove", "hotbush", "inthevip", "mikeinbrazil", "mikesapartment", "milfhunter", "milfnextdoor", "momsbangteens", "momslickteens", "moneytalks", "monstercurves", "nofaces", "pure18", "realorgasms", "rkprime", "roundandbrown", "saturdaynightlatinas", "seemywife", "sneakysex", "streetblowjobs", "teamsquirt", "teenslovehugecocks", "topshelfpussy", "trannysurprise", "vipcrew", "welivetogether", "wivesinpantyhose"]:
-        for url in ["1", "2"]:
-            page = requests.get("https://www.realitykings.com/tour/videos/all-sites/all-categories/all-time/recent/" + url)
+        if site.lower() == "40inchplus":
+            site = "4"
+        elif site.lower() == "8thstreetlatinas":
+            site = "1"
+        elif site.lower() == "badtowtruck":
+            site = "44"
+        
+        elif site.lower() == "momsbangteens":
+            site = "27"
+        
+        else:
+            site = ""
+        
+        for pagenumber in range(1,10):
+            page = requests.get("https://www.realitykings.com/scenes?page=" + str(pagenumber) + "&site=" + site)        
             detailsPageElements = html.fromstring(page.content)
             i = 0
-            for releaseDate in detailsPageElements.xpath('//span[@class= "card-info__meta-date"]/text()'):
-                title = detailsPageElements.xpath('//h2[@class= "card-info__title"]/a')[i].get("title")
-                #Reality Kings date format is (Month d, yyyy) ... convert it to yyyy-mm-dd
-                datetime_object = datetime.strptime(releaseDate, '%B %d, %Y')
-                releaseDate = datetime_object.strftime('%Y-%m-%d')                
-                
-                #extra check due to possibility of multiple releases on one date
-                releaseSite = detailsPageElements.xpath('//div[@class= "card-info__meta"]/a')[i].get("title").replace("-", "").replace(" ", "").strip()
-                if releaseDate == date and site.lower() == releaseSite.lower():
+            for releaseDate in detailsPageElements.xpath('//div[@class="dtkdna-5 bUqDss"][1]/text()'):
+                sceneID = detailsPageElements.xpath('//span[contains(@class, "dtkdna-5")]/a')[i].get('href').split("/")[2]
+                title = sceneID + " - " + detailsPageElements.xpath('//span[contains(@class, "dtkdna-5")]/a/text()')[i]
+                #sexyhub date format is (Mon dd, yyyy) ... convert it to yyyy-mm-dd
+                datetime_object = datetime.strptime(releaseDate, '%b %d, %Y')
+                releaseDate = datetime_object.strftime('%Y-%m-%d')
+                if releaseDate == date:
                     return title
-                i += 1 
+                i += 1
+    #SEXYHUB NETWORK
+    elif site.lower() in ["danejones", "fitnessrooms", "girlfriends", "lesbea", "massagerooms", "momxxx"]:
+        if site.lower() == "danejones":
+            site = "290"
+        elif site.lower() == "fitnessrooms":
+            site = "294"
+        elif site.lower() == "girlfriends":
+            site = "289"
+        elif site.lower() == "lesbea":
+            site = "291"
+        elif site.lower() == "massagerooms":
+            site = "292"
+        elif site.lower() == "momxxx":
+            site = "293"
+        
+        for pagenumber in range(1,10):
+            page = requests.get("https://www.sexyhub.com/scenes?page=" + str(pagenumber) + "&site=" + site)        
+            detailsPageElements = html.fromstring(page.content)
+            i = 0
+            for releaseDate in detailsPageElements.xpath('//div[@class="dtkdna-5 bUqDss"][1]/text()'):
+                sceneID = detailsPageElements.xpath('//span[contains(@class, "dtkdna-5")]/a')[i].get('href').split("/")[2]
+                title = sceneID + " - " + detailsPageElements.xpath('//span[contains(@class, "dtkdna-5")]/a/text()')[i]
+                #sexyhub date format is (Mon dd, yyyy) ... convert it to yyyy-mm-dd
+                datetime_object = datetime.strptime(releaseDate, '%b %d, %Y')
+                releaseDate = datetime_object.strftime('%Y-%m-%d')
+                if releaseDate == date:
+                    return title
+                i += 1
     # SISLOVESME
     elif site.lower() == "sislovesme":
         page = requests.get("https://www.sislovesme.com/")
