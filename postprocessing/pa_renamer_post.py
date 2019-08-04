@@ -64,8 +64,10 @@ def main():
         hdlr.setFormatter(formatter)
         logger.addHandler(hdlr)
 
-    logger.info("Starting to process: %s" % dir)
-    
+    logger.info(" Starting to process: %s" % dir)
+    logger.debug(" dryrun: %s batch: %s cleanup: %s mediainfo: %s mediainfo2: %s debug: %s use_filename: %s" % (dryrun, batch, cleanup, mediainfo, mediainfo2, debug, use_filename))
+
+
     if use_filename:
         for item in os.listdir(dir):
             fullfilepath = os.path.join(dir, item)
