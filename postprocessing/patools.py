@@ -25,6 +25,7 @@ def pa_parse_dir(dir, use_filename):
 
     # logger.info("Processing: %s" % search_string)
     search_string = search_string.split('\\')[-1]
+    search_string = search_string.split('/')[-1]
     search_string = search_string.split('.XXX')[0]
     search_string = search_string.split(' XXX')[0]
     dir_pattern = re.compile(r'^([a-zA-Z0-9-]+)(\s|.|\s-\s)(([0-9]{2,4})[\s|.]([0-9]{2})[\s|.]([0-9]{2})[\s|.]([\s.a-zA-Z0-9]+)|([\s.a-zA-Z0-9]+)[\s|.|\s(]([0-9]{2,4})[\s|.-]([0-9]{2})[\s|.-]([0-9]{2}))')
