@@ -65,7 +65,7 @@ def main():
         logger.addHandler(hdlr)
 
     logger.info(" Starting to process: %s" % dir)
-    logger.debug(" Variables:
+    logger.debug(" Variables:")
     logger.debug(" dryrun: %s, batch: %s, cleanup: %s, mediainfo: %s, mediainfo2: %s, use_filename: %s" % (dryrun, batch, cleanup, mediainfo, mediainfo2, use_filename))
     
     if use_filename:
