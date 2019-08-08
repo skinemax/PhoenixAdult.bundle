@@ -86,7 +86,7 @@ def main():
         
         
 def renameShoot(shoot, dir, fullfilepath, dryrun, cleanup, mediainfo, mediainfo2, use_filename):
-    from siteConfig import debug
+    from siteConfig import debug, overwrite_duplicate, keep_duplicate, duplicate_location
     logger = logging.getLogger('pa_renamer')
     logger.debug("Full shoot dict:")
     logger.debug(shoot)
@@ -132,21 +132,45 @@ def renameShoot(shoot, dir, fullfilepath, dryrun, cleanup, mediainfo, mediainfo2
                             dir_new = dir_new + " " + media_Info
                         if mediainfo2:
                             filename_new = filename_new.replace(" (", " (" + media_Info + ") (")
+                filename_new = filename_new.replace(".mp4", '.' + filetype)
                 logger.debug(" After:")
                 logger.debug("    New directory: %s" % dir_new)
                 logger.debug("    New file name: %s" % filename_new)
                 if filetype in ["mp4", "avi", "mkv"]:
-                    newpath = os.path.join(dir_new, filename_new.replace(".mp4", '.' + filetype))
+                    newpath = os.path.join(dir_new, filename_new)
                     if dryrun:
-                        logger.info("[DRYRUN] Renaming: %s -> %s" % (fullfilepath, newpath))
+                        logger.info(" [DRYRUN] Renaming: %s -> %s" % (fullfilepath, newpath))
                     else:
                         try:
                             os.makedirs(dir_new)
                         except:
                             pass
                         logger.info(" Renaming/Moving from: %s --> %s" % (fullfilepath, newpath))
-                        os.rename(fullfilepath, newpath)
-                        os.chmod(newpath, 0775)
+                        try:
+                            os.rename(fullfilepath, newpath)
+                            os.chmod(newpath, 0775)
+                        except:
+                            # duplicate file handling
+                            logger.info(" File already Exists")
+                            if duplicate_location == "":
+                                duplicate_location = dir
+                            duplicatepath = os.path.join(duplicate_location, filename_new)
+                            if overwrite_duplicate:
+                                logger.info(" Overwriting Original")
+                                os.remove(newpath)
+                                os.rename(fullfilepath, newpath)
+                                os.chmod(newpath, 0775)
+                            elif not keep_duplicate:
+                                logger.info(" Deleting Duplicate")
+                                os.remove(fullfilepath)
+                            else:
+                                try:
+                                    os.makedirs(duplicate_location)
+                                except:
+                                    pass
+                                logger.info(" Renaming/Moving to %s" % duplicatepath)
+                                os.rename(fullfilepath, duplicatepath)
+                                os.chmod(duplicatepath, 0775)
             if cleanup and not dryrun:
                 if filetype in ["txt", "jpg", "jpeg", "nfo", "sfv", "srr"]:
                     os.remove(fullfilepath)
