@@ -30,7 +30,7 @@ def getRename(site, actor, title, date):
     
     
    
-    #FAKEHUB NETWORK
+    # FAKEHUB NETWORK
     if site.lower() in ["fakeagent", "fakeagentuk", "fakecop", "fakedrivingschool", "fakehospital", "fakehostel", "fakehuboriginals", "faketaxi", "femaleagent", "femalefaketaxi", "publicagent"]:
         if site.lower() == "fakeagent":
             site = "281"
@@ -69,8 +69,23 @@ def getRename(site, actor, title, date):
                 if releaseDate == date:
                     return title
                 i += 1
-    #LITTLE CAPRICE DREAMS
-    if site.lower() == "littlecapricedreams":
+    # FAMILY STROKES
+    elif site.lower() == "familystrokes":
+        page = requests.get('https://www.familystrokes.com/scenes')
+        detailsPageElements = html.fromstring(page.content)
+        i = 0
+        for releaseDate in detailsPageElements.xpath('//div[@class="scene-date"]/text()'):
+            releaseDate = releaseDate.strip()
+            title = detailsPageElements.xpath('//div[@class="title"]//span/text()')[i]
+            #Danejones date format is (dd/mm/yyyy) ... convert it to yyyy-mm-dd
+            datetime_object = datetime.strptime(releaseDate, '%m/%d/%Y')
+            releaseDate = datetime_object.strftime('%Y-%m-%d')
+            if releaseDate == date:
+                return title
+            i += 1
+    
+    # LITTLE CAPRICE DREAMS
+    elif site.lower() == "littlecapricedreams":
         page = requests.get('https://www.littlecaprice-dreams.com/videos/')
         detailsPageElements = html.fromstring(page.content)
         i = 0
@@ -113,7 +128,7 @@ def getRename(site, actor, title, date):
                     return title
                 i += 1       
         
-    #MOFOS NETWORK
+    # MOFOS NETWORK
     elif site.lower() in ["sharemybf"]:
         if site.lower() == "sharemybf":
             site = "201"
@@ -188,7 +203,7 @@ def getRename(site, actor, title, date):
                 if releaseDate == date:
                     return title
                 i += 1
-    #SEXYHUB NETWORK
+    # SEXYHUB NETWORK
     elif site.lower() in ["danejones", "fitnessrooms", "girlfriends", "lesbea", "massagerooms", "momxxx"]:
         if site.lower() == "danejones":
             site = "290"
@@ -230,7 +245,7 @@ def getRename(site, actor, title, date):
             if releaseDate == date:
                 return title
             i += 1
-    #VIXEN
+    # VIXEN
     elif site.lower() == "vixen":
         page = requests.get('https://www.vixen.com/search?q=' + title)
         detailsPageElements = html.fromstring(page.content)
