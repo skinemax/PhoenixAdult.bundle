@@ -10,6 +10,7 @@ Features
 - Designed to make plex matching with this metadata agent work smoothly/automatically
 - Deletes leftover files and empty folders
 - Batch rename old collections (on windows)
+- Dry-Run option to test rename fucntionality
 
 
 - Customisation:
@@ -31,3 +32,6 @@ Instructions
 2. Point SabNZBD to pa_renamer_post.py
 3. Customise your settings in siteConfig.py
 4. Set sabnzbd to run this post processing script after appropriate downloads complete
+
+To Run Manually:
+`python pa_renamer.py [options] (Directory)`
