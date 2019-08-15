@@ -35,6 +35,6 @@ Instructions
 4. Set sabnzbd to run this post processing script after appropriate downloads complete
 
 To Run Manually:
-`python pa_renamer.py [options] (Directory)`
+`python pa_renamer.py [options] (Directory containing one video file)`
 
 Note: If options are enabled in siteConfig.py they will be enabled when run manually also.
