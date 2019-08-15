@@ -31,7 +31,7 @@ Instructions
 1. Place the files in you sabnzbd script folder
 2. Point SabNZBD to pa_renamer_post.py
 3. Customise your settings in siteConfig.py
-   - Don't forget the log diretory
+   - Don't forget the log directory
 4. Set sabnzbd to run this post processing script after appropriate downloads complete
 
 To Run Manually:
