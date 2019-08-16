@@ -1,12 +1,6 @@
 #!/usr/local/sabnzbd/env/bin/python
 # !/usr/bin/env python
 
-# point sabnzbd to this file for automated postprocessing
-# configure and customise siteConfig.py
-# install lxml if required -> pip install lxml
-
-
-
 import sys
 import os, glob, shutil
 import logging
