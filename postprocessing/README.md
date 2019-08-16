@@ -32,7 +32,7 @@ This script will automatically rename and move files after they are downloaded.
 4. Set sabnzbd to run this post processing script after appropriate downloads complete
 
 ### To Run Manually:
-`python pa_renamer.py [options] (Directory containing one video file)`
+`python pa_renamer_post.py [options] (Directory containing one video file)`
 
 **Options**
 
