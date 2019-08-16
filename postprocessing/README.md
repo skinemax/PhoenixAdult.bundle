@@ -34,6 +34,15 @@ This script will automatically rename and move files after they are downloaded.
 ### To Run Manually:
 `python pa_renamer.py [options] (Directory containing one video file)`
 
+**Options**
+
+- "-d" "--dryrun", help="don't do work, just show what will happen"
+- "-b", "--batch", help="Do not try to log as batch job will fail"
+- "-c", "--cleanup", help="Delete leftover files and cleanup folders after rename"
+- "-m", "--mediainfo", help="Add media info to the folder. Resolution and framerate"
+- "-m2", "--mediainfo2", help="Add media info to the filename. Resolution and framerate"
+- "-n", "--filerename", help="Use the filename instead of the folder name. Not recommended"
+
 **Note:** If options are enabled in siteConfig.py they will be enabled when run manually also.
 
 ### Batch Processing old collections
