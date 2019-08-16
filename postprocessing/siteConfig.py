@@ -42,11 +42,11 @@ sab_mediainfo2=False
 #We will keep only the portion of the path before siteList field 2
 #We will add siteList field 3 back onto whatever is remaining of the path
 
-#Examples
-#From C:\\Path\to\Porn\Downloads      To: C:\\Path\to\Porn\Downloads\Site   Set: siteList[0] = ["Site", "Downloads", "Downloads\Site"]
-#                                   To: C:\\Path\to\Porn\Site               Set: siteList[0] = ["Site", "Downloads", "Site"]
-#                                   To: C:\\Different\Path\to\Site          Set: siteList[0] = ["Site", "Path", "Different\Path\to\Site"]
-#                                   Leave in same location                  Set: siteList[0] = ["Site", "", ""]
+#Example folder structure             Move to:                            In siteList set as follows:
+#C:\\Path\to\Porn\Downloads           C:\\Path\to\Porn\Downloads\Site     Set: siteList[0] = ["Site", "Downloads", "Downloads\Site"]
+#                                     C:\\Path\to\Porn\Site               Set: siteList[0] = ["Site", "Downloads", "Site"]
+#                                     C:\\Different\Path\to\Site          Set: siteList[0] = ["Site", "Path", "Different\Path\to\Site"]
+#                                     Leave in same location              Set: siteList[0] = ["Site", "", ""]
 
 siteList = [None] * 34
 
