@@ -7,7 +7,7 @@ This script will automatically rename and move files after they are downloaded.
 - Adds Scene ID to filename if necessary
 - Designed to make plex matching with this metadata agent work smoothly/automatically
 - Deletes leftover files and empty folders
-- Batch rename old collections (on windows)
+- Bulk rename old collections
 - Dry-Run option to test rename fucntionality
 
 
@@ -45,7 +45,7 @@ This script will automatically rename and move files after they are downloaded.
 
 **Note:** If options are enabled in siteConfig.py they will be enabled when run manually also.
 
-### Batch Processing old collections
+### Processing old collections
 
 For old collections where the media is structured with multiple video files in one folder you will need to enable the use_filename parameter in siteConfig.py (or use the -n option above). This will make the code use the name of each individual file instead of the folder name. The file need to be named in a compatible format. If you have files not in the correct format we can attempt to code a regex match for it if you provide an example in an issue.
 
