@@ -854,6 +854,11 @@ searchSites[762] = ["Ultrafilms","Ultrafilms","https://www.ultrafilms.xxx","http
 searchSites[763] = ["FuckingAwesome","FuckingAwesome","https://fuckingawesome.com","https://fuckingawesome.com/search/videos/"]
 searchSites[764] = ["ToughLoveX","ToughLoveX","https://tour.toughlovex.com","https://tour.toughlovex.com/models?letter="]
 
+# Linux workaround for TLS issues in plex, check if we're on linux and send to the proxy
+if "linux" in sys.platform:
+    Log("Activating linux TLS proxy workaround")
+    searchSites[695] = ["XConfessions","XConfessions","http://localhost:8695","http://localhost:8695/search?query="]
+
 def getSearchBaseURL(siteID):
     return searchSites[siteID][2]
 def getSearchSearchURL(siteID):
