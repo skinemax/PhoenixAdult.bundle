@@ -11,10 +11,10 @@ def search(results,encodedTitle,title,searchTitle,siteNum,lang,searchByDateActor
         searchResults = HTML.ElementFromURL(url)
         pageTitle = searchResults.xpath('//h1')[0].text_content().lower()
         if "found" in pageTitle:
-            resultsNum = len(searchResults.xpath('//li[@class="list-group-item"] | //div[@class="item   sc-1wwemg3-0 cQkKzD"]'))
+            resultsNum = len(searchResults.xpath('//div[contains(@class,"item")]')
             Log("resultsNum: " + str(resultsNum))
             if resultsNum > 0:
-                for searchResult in searchResults.xpath('//li[@class="list-group-item"] | //div[@class="item   sc-1wwemg3-0 cQkKzD"]'):
+                for searchResult in searchResults.xpath('//div[contains(@class,"item")]'):
                     curID = searchResult.xpath('.//a[contains(@class,"item-name")]')[0].get('href').replace('/','+').replace('?','!')
                     if "+movie+" in curID: # model page and photos in search results
                         Log(">>>VALID RESULT<<<")
